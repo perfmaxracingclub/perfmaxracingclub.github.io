@@ -39,11 +39,11 @@ const Form = () => {
     }
 
     function generateRows(row) {
-        return distances.map((distance) => { 
-            return <TableCell align="right" sx={{ color: row.percentage === '100%' ? 'yellow' : ''}}>{row[distance]}</TableCell>
+        return distances.map((distance) => {
+            return <TableCell align="right" sx={{ color: row.percentage === '100%' ? 'yellow' : '' }}>{row[distance]}</TableCell>
         })
     }
-    
+
 
 
     const categoryData = fetchCategoryMetadata(distance, time)
@@ -90,7 +90,7 @@ const Form = () => {
                                 label="Time"
                                 onChange={handleChangeTime}
                             >
-                                {times.map(({category, time}) => (
+                                {times.map(({ category, time }) => (
                                     <MenuItem
                                         key={time}
                                         value={time}
@@ -104,13 +104,12 @@ const Form = () => {
                 </Grid>
                 <Grid item xs={4}></Grid>
 
-                <Grid item xs={3}></Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                     <TableContainer component={Paper}>
                         <Table aria-label="simple table"   >
                             <TableHead>
-                            <TableRow>
-                            <TableCell colspan={100} align="center"  sx={{ 'font-weight': 'bold' }}>{categoryData?.category}</TableCell>
+                                <TableRow>
+                                    <TableCell colspan={100} align="center" sx={{ 'font-weight': 'bold' }}>{categoryData?.category}</TableCell>
                                 </TableRow>
                                 <TableRow >
                                     <TableCell>%</TableCell>
@@ -127,7 +126,7 @@ const Form = () => {
                                         key={row.percentage}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     >
-                                        <TableCell component="th" sx={{ color: row.percentage === '100%' ? 'yellow' : ''}}>
+                                        <TableCell component="th" sx={{ color: row.percentage === '100%' ? 'yellow' : '' }}>
                                             {row.percentage}
                                         </TableCell>
                                         {generateRows(row)}
@@ -137,7 +136,6 @@ const Form = () => {
                         </Table>
                     </TableContainer>
                 </Grid>
-                <Grid item xs={3}></Grid>
             </Grid>
         </div >
     )
