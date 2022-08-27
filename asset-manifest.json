@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/tableforgetapp/static/css/main.98d2775e.css",
-    "main.js": "/tableforgetapp/static/js/main.d0f5c931.js",
+    "main.js": "/tableforgetapp/static/js/main.d2a3578e.js",
     "index.html": "/tableforgetapp/index.html",
     "main.98d2775e.css.map": "/tableforgetapp/static/css/main.98d2775e.css.map",
-    "main.d0f5c931.js.map": "/tableforgetapp/static/js/main.d0f5c931.js.map"
+    "main.d2a3578e.js.map": "/tableforgetapp/static/js/main.d2a3578e.js.map"
   },
   "entrypoints": [
     "static/css/main.98d2775e.css",
-    "static/js/main.d0f5c931.js"
+    "static/js/main.d2a3578e.js"
   ]
 }
