@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.98d2775e.css",
-    "main.js": "/static/js/main.33ebaaa8.js",
-    "index.html": "/index.html",
-    "main.98d2775e.css.map": "/static/css/main.98d2775e.css.map",
-    "main.33ebaaa8.js.map": "/static/js/main.33ebaaa8.js.map"
+    "main.css": "/perfmaxracingclub.github.io/static/css/main.98d2775e.css",
+    "main.js": "/perfmaxracingclub.github.io/static/js/main.33ebaaa8.js",
+    "index.html": "/perfmaxracingclub.github.io/index.html",
+    "main.98d2775e.css.map": "/perfmaxracingclub.github.io/static/css/main.98d2775e.css.map",
+    "main.33ebaaa8.js.map": "/perfmaxracingclub.github.io/static/js/main.33ebaaa8.js.map"
   },
   "entrypoints": [
     "static/css/main.98d2775e.css",
