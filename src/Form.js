@@ -52,7 +52,7 @@ const Form = () => {
 
     return (
         <div>
-            <Grid container spacing={2}>
+            <Grid container>
                 <Grid item xs={4}></Grid>
                 <Grid item xs={4}>
 
@@ -90,27 +90,27 @@ const Form = () => {
                                 label="Time"
                                 onChange={handleChangeTime}
                             >
-                                {times.map((time) => (
+                                {times.map(({category, time}) => (
                                     <MenuItem
                                         key={time}
                                         value={time}
                                     >
-                                        {time}
+                                        {category} - {time}
                                     </MenuItem>
                                 ))}
                             </Select>
                         </FormControl>
                     </Box>
                 </Grid>
-
                 <Grid item xs={4}></Grid>
+
                 <Grid item xs={3}></Grid>
                 <Grid item xs={6}>
                     <TableContainer component={Paper}>
                         <Table aria-label="simple table"   >
                             <TableHead>
                             <TableRow>
-                            <TableCell colspan={100} align="center" sx={{ 'font-weight': 'bold'}}>{categoryData?.category}</TableCell>
+                            <TableCell colspan={100} align="center"  sx={{ 'font-weight': 'bold' }}>{categoryData?.category}</TableCell>
                                 </TableRow>
                                 <TableRow >
                                     <TableCell>%</TableCell>

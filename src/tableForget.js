@@ -3,7 +3,7 @@
 export const tableForget = {
     '100m': [
         {
-            category: 'A-1',
+            category: 'A-01',
             timeByPercentages: {
                 '100%': '00\'10\".65',
                 '95%':  '00\'11\".21',
@@ -18,7 +18,7 @@ export const tableForget = {
                 '50%':  '00\'21\".31'
             }
         }, {
-            category: 'A-2',
+            category: 'A-02',
             timeByPercentages: {
                 '100%': '00\'10\".71',
                 '95%':  '00\'11\".28',
@@ -33,7 +33,7 @@ export const tableForget = {
                 '50%':  '00\'21\".42'
             },
         }, {
-            category: 'A-3',
+            category: 'A-03',
             timeByPercentages: {
                 '100%': '00\'10\".77',
                 '95%':  '00\'11\".34',
@@ -48,7 +48,7 @@ export const tableForget = {
                 '50%':  '00\'21\".54'
             }
         }, {
-            category: 'A-4',
+            category: 'A-04',
             timeByPercentages: {
                 '100%': '00\'10\".83',
                 '95%':  '00\'11\".40',
@@ -63,7 +63,7 @@ export const tableForget = {
                 '50%':  '00\'21\".65'
             }
         }, {
-            category: 'A-5',
+            category: 'A-05',
             timeByPercentages: {
                 '100%': '00\'10\".88',
                 '95%':  '00\'11\".46',
@@ -78,7 +78,7 @@ export const tableForget = {
                 '50%':  '00\'21\".76'
             }
         }, {
-            category: 'A-6',
+            category: 'A-06',
             timeByPercentages: {
                 '100%': '00\'10\".94',
                 '95%':  '00\'11\".52',
@@ -93,7 +93,7 @@ export const tableForget = {
                 '50%':  '00\'21\".89'
             }
         }, {
-            category: 'A-7',
+            category: 'A-07',
             timeByPercentages: {
                 '100%': '00\'11\".00',
                 '95%':  '00\'11\".58',
@@ -108,7 +108,7 @@ export const tableForget = {
                 '50%':  '00\'22\".00'
             }
         }, {
-            category: 'A-8',
+            category: 'A-08',
             timeByPercentages: {
                 '100%': '00\'11\".06',
                 '95%':  '00\'11\".64',
@@ -123,7 +123,7 @@ export const tableForget = {
                 '50%':  '00\'22\".12'
             }
         }, {
-            category: 'A-39',
+            category: 'A-09',
             timeByPercentages: {
                 '100%': '00\'11\".12',
                 '95%':  '00\'11\".70',
@@ -215,7 +215,9 @@ export function fetchDistances() {
 
 export function fetchBestTimesByCategory(distance) {
     const distanceData = tableForget[distance];
-    return distanceData.map(data => data.timeByPercentages['100%']);
+    return distanceData.map(data => {
+        return { 'category': data.category, 'time': data.timeByPercentages['100%'] }
+    } );
 }
 
 
