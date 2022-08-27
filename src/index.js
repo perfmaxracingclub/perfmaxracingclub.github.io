@@ -11,6 +11,7 @@ const darkTheme = createTheme({
     // background: {default: '#071626', paper: '#05111c', border:'yellow'},
     // borderColor: {default: 'pink' }
   },
+  spacing: [0, 4, 8, 16, 32, 64],
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

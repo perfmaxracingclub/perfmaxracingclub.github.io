@@ -12,16 +12,19 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
-
-
+import { styled } from '@mui/system';
 import { fetchDistances, fetchBestTimesByCategory, fetchCategoryMetadata, generateDataTable } from './tableForget.js'
 
 
-
+const tableFontSize = '0.7rem'
 
 
 const Form = () => {
+
+    const StyledTableCell = styled(TableCell)({
+        padding: 4,
+    })
+
     const [distance, setDistance] = React.useState('100m')
     const [time, setTime] = React.useState('')
     const [times, setTimes] = React.useState(fetchBestTimesByCategory(distance))
@@ -40,7 +43,10 @@ const Form = () => {
 
     function generateRows(row) {
         return distances.map((distance) => {
-            return <TableCell align="right" sx={{ color: row.percentage === '100%' ? 'yellow' : '' }}>{row[distance]}</TableCell>
+            return <StyledTableCell align="right" key={row.percentage} sx={{
+                color: row.percentage === '100%' ? 'yellow' : '',
+                'fontSize': tableFontSize
+            }}>{row[distance]}</StyledTableCell>
         })
     }
 
@@ -53,8 +59,8 @@ const Form = () => {
     return (
         <div>
             <Grid container>
-                <Grid item xs={4}></Grid>
-                <Grid item xs={4}>
+
+                <Grid item xs={12}>
 
                     <Box sx={{ minWidth: 120 }} display="flex"
                         justifyContent="center"
@@ -81,7 +87,7 @@ const Form = () => {
                             </Select>
                         </FormControl>
 
-                        <FormControl sx={{ m: 1, minWidth: 120 }}>
+                        <FormControl sx={{ m: 1, minWidth: 200 }}>
                             <InputLabel id="time-select-label">Time</InputLabel>
                             <Select
                                 labelId="time-select-label"
@@ -102,20 +108,19 @@ const Form = () => {
                         </FormControl>
                     </Box>
                 </Grid>
-                <Grid item xs={4}></Grid>
 
                 <Grid item xs={12}>
-                    <TableContainer component={Paper}>
-                        <Table aria-label="simple table"   >
+                    <TableContainer component={Paper} >
+                        <Table aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell colspan={100} align="center" sx={{ 'font-weight': 'bold' }}>{categoryData?.category}</TableCell>
+                                    <StyledTableCell colSpan={100} align="center" sx={{ 'fontWeight': 'bold' }}>{categoryData?.category}</StyledTableCell>
                                 </TableRow>
                                 <TableRow >
-                                    <TableCell>%</TableCell>
+                                    <StyledTableCell>%</StyledTableCell>
                                     {
                                         distances.map((col => (
-                                            <TableCell align="right" >{col}</TableCell>
+                                            <StyledTableCell align="right" sx={{ 'fontSize': '0.8rem' }}>{col}</StyledTableCell>
                                         )))
                                     }
                                 </TableRow>
@@ -124,11 +129,13 @@ const Form = () => {
                                 {rows.map((row) => (
                                     <TableRow
                                         key={row.percentage}
-                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                        sx={{
+                                            '&:last-child td, &:last-child th': { border: 0 }
+                                        }}
                                     >
-                                        <TableCell component="th" sx={{ color: row.percentage === '100%' ? 'yellow' : '' }}>
+                                        <StyledTableCell component="th" sx={{ color: row.percentage === '100%' ? 'yellow' : '', 'fontSize': tableFontSize }}>
                                             {row.percentage}
-                                        </TableCell>
+                                        </StyledTableCell>
                                         {generateRows(row)}
                                     </TableRow>
                                 ))}
