@@ -20,10 +20,6 @@ import { fetchDistances, fetchBestTimesByCategory, fetchCategoryMetadata, genera
 
 
 
-const percentages = [
-    '100%', '95%', '90%', '85%', '80%', '75%', '70%', '65%', '60%', '55%', '50%'
-]
-
 
 const Form = () => {
     const [distance, setDistance] = React.useState('100m')
@@ -42,8 +38,17 @@ const Form = () => {
         setTime(event.target.value)
     }
 
+    function generateRows(row) {
+        return distances.map((distance) => { 
+            return <TableCell align="right" sx={{ color: row.percentage === '100%' ? 'yellow' : ''}}>{row[distance]}</TableCell>
+        })
+    }
+    
+
+
     const categoryData = fetchCategoryMetadata(distance, time)
     const rows = categoryData ? generateDataTable(categoryData.category) : []
+    console.log(rows)
 
     return (
         <div>
@@ -99,25 +104,18 @@ const Form = () => {
                 </Grid>
 
                 <Grid item xs={4}></Grid>
-                <Grid item xs={4}></Grid>
-                <Grid item xs={4}>
-                    <Box sx={{ minWidth: 120 }} display="flex"
-                        justifyContent="center"
-                        alignItems="center"
-                        minHeight="4vh">
-                        <label>Category: {categoryData?.category}</label>
-                    </Box>
-                </Grid>
-                <Grid item xs={4}></Grid>
-                <Grid item xs={2}></Grid>
-                <Grid item xs={8}>
+                <Grid item xs={3}></Grid>
+                <Grid item xs={6}>
                     <TableContainer component={Paper}>
-                        <Table aria-label="simple table">
+                        <Table aria-label="simple table"   >
                             <TableHead>
-                                <TableRow>
-                                    <TableCell>Distance</TableCell>
+                            <TableRow>
+                            <TableCell colspan={100} align="center" sx={{ 'font-weight': 'bold'}}>{categoryData?.category}</TableCell>
+                                </TableRow>
+                                <TableRow >
+                                    <TableCell>%</TableCell>
                                     {
-                                        percentages.map((col => (
+                                        distances.map((col => (
                                             <TableCell align="right" >{col}</TableCell>
                                         )))
                                     }
@@ -126,30 +124,20 @@ const Form = () => {
                             <TableBody>
                                 {rows.map((row) => (
                                     <TableRow
-                                        key={row.distance}
+                                        key={row.percentage}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     >
-                                        <TableCell component="th" scope="row">
-                                            {row.distance}
+                                        <TableCell component="th" sx={{ color: row.percentage === '100%' ? 'yellow' : ''}}>
+                                            {row.percentage}
                                         </TableCell>
-                                        <TableCell align="right">{row['100%']}</TableCell>
-                                        <TableCell align="right">{row['95%']}</TableCell>
-                                        <TableCell align="right">{row['90%']}</TableCell>
-                                        <TableCell align="right">{row['85%']}</TableCell>
-                                        <TableCell align="right">{row['80%']}</TableCell>
-                                        <TableCell align="right">{row['75%']}</TableCell>
-                                        <TableCell align="right">{row['70%']}</TableCell>
-                                        <TableCell align="right">{row['65%']}</TableCell>
-                                        <TableCell align="right">{row['60%']}</TableCell>
-                                        <TableCell align="right">{row['55%']}</TableCell>
-                                        <TableCell align="right">{row['50%']}</TableCell>
+                                        {generateRows(row)}
                                     </TableRow>
                                 ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
                 </Grid>
-                <Grid item xs={2}></Grid>
+                <Grid item xs={3}></Grid>
             </Grid>
         </div >
     )

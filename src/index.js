@@ -7,12 +7,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 const darkTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: 'dark'
+    // background: {default: '#071626', paper: '#05111c', border:'yellow'},
+    // borderColor: {default: 'pink' }
   },
 });
-
-
-
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
