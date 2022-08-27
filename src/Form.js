@@ -22,7 +22,7 @@ const tableFontSize = '0.7rem'
 const Form = () => {
 
     const StyledTableCell = styled(TableCell)({
-        padding: 4,
+        padding: 8,
     })
 
     const [distance, setDistance] = React.useState('100m')
@@ -35,6 +35,8 @@ const Form = () => {
     function handleChangeDistance(event) {
         setDistance(event.target.value)
         setTimes(fetchBestTimesByCategory(event.target.value))
+
+        setTime(null)
     }
 
     function handleChangeTime(event) {
