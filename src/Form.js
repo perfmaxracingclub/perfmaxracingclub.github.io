@@ -12,7 +12,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { styled } from '@mui/system';
 import { fetchDistances, fetchBestTimesByCategory, fetchCategoryMetadata, generateDataTable } from './tableForget.js'
 
 
@@ -20,10 +19,6 @@ const tableFontSize = '0.7rem'
 
 
 const Form = () => {
-
-    const StyledTableCell = styled(TableCell)({
-        padding: 8,
-    })
 
     const [distance, setDistance] = React.useState('100m')
     const [time, setTime] = React.useState('')
@@ -45,10 +40,10 @@ const Form = () => {
 
     function generateRows(row) {
         return distances.map((distance) => {
-            return <StyledTableCell align="right" key={row.percentage} sx={{
+            return <TableCell align="right" key={row.percentage} sx={{
                 color: row.percentage === '100%' ? 'yellow' : '',
                 'fontSize': tableFontSize
-            }}>{row[distance]}</StyledTableCell>
+            }}>{row[distance]}</TableCell>
         })
     }
 
@@ -113,16 +108,16 @@ const Form = () => {
 
                 <Grid item xs={12}>
                     <TableContainer component={Paper} >
-                        <Table aria-label="simple table">
+                        <Table aria-label="simple table" size="small">
                             <TableHead>
                                 <TableRow>
-                                    <StyledTableCell colSpan={100} align="center" sx={{ 'fontWeight': 'bold' }}>{categoryData?.category}</StyledTableCell>
+                                    <TableCell colSpan={100} align="center" sx={{ 'fontWeight': 'bold' }}>{categoryData?.category}</TableCell>
                                 </TableRow>
                                 <TableRow >
-                                    <StyledTableCell>%</StyledTableCell>
+                                    <TableCell>%</TableCell>
                                     {
                                         distances.map((col => (
-                                            <StyledTableCell align="right" sx={{ 'fontSize': '0.8rem' }}>{col}</StyledTableCell>
+                                            <TableCell align="right" sx={{ 'fontSize': '0.8rem' }}>{col}</TableCell>
                                         )))
                                     }
                                 </TableRow>
@@ -130,14 +125,15 @@ const Form = () => {
                             <TableBody>
                                 {rows.map((row) => (
                                     <TableRow
+                                        hover
                                         key={row.percentage}
                                         sx={{
                                             '&:last-child td, &:last-child th': { border: 0 }
                                         }}
                                     >
-                                        <StyledTableCell component="th" sx={{ color: row.percentage === '100%' ? 'yellow' : '', 'fontSize': tableFontSize }}>
+                                        <TableCell component="th" sx={{ color: row.percentage === '100%' ? 'yellow' : '', 'fontSize': tableFontSize }}>
                                             {row.percentage}
-                                        </StyledTableCell>
+                                        </TableCell>
                                         {generateRows(row)}
                                     </TableRow>
                                 ))}
