@@ -12,53 +12,74 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { fetchDistances, fetchBestTimesByCategory, fetchCategoryMetadata, generateDataTable } from './tableForget.js'
+import { tableForget } from './tableForget.js'
 
 
 const tableFontSize = '0.7rem'
 
 
+
+function generateDataTable(categoryName) {
+
+    let categoryByDistance = [];
+    for (let distance in tableForget) {
+        let distanceCategory = tableForget[distance].find(item => item.category === categoryName);
+        distanceCategory = { ...distanceCategory, distance }
+        categoryByDistance.push(distanceCategory);
+    }
+
+
+    return percentages.map(percentage => {
+        let obj = { percentage }
+
+        categoryByDistance.forEach(category => {
+            let { timeByPercentages, distance } = category
+            if (timeByPercentages)
+                obj[distance] = timeByPercentages[percentage]
+        })
+
+        return obj
+    })
+
+}
+
+function generateRows(row) {
+    return distances.map((distance, index) => {
+        return <TableCell align="right" key={index} sx={{
+            color: row.percentage === '100%' ? '#FFBF00' : '',
+            'fontSize': tableFontSize
+        }}>{row[distance]}</TableCell>
+    })
+}
+
+
+const distances = ['100m', '120m', '200m', '250m', '300m', '350m', '400m']
+const percentages = ['100%', '95%', '90%', '85%', '80%', '75%', '70%', '65%', '60%', '55%', '50%']
+
+
 const Form = () => {
-
     const [distance, setDistance] = React.useState('100m')
-    const [time, setTime] = React.useState('')
-    const [times, setTimes] = React.useState(fetchBestTimesByCategory(distance))
-
-
-    const distances = fetchDistances();
+    const [category, setCategory] = React.useState('A-01')
+    const [bestTimesByCategory, setBestTimeByCategory] = React.useState([])
+    const [rows, setRows] = React.useState([])
 
     function handleChangeDistance(event) {
         setDistance(event.target.value)
-        setTimes(fetchBestTimesByCategory(event.target.value))
-
-        setTime(null)
     }
 
-    function handleChangeTime(event) {
-        setTime(event.target.value)
+    function handleChangeCategory(event) {
+        setCategory(event.target.value)
     }
 
-    function generateRows(row) {
-        return distances.map((distance) => {
-            return <TableCell align="right" key={row.percentage} sx={{
-                color: row.percentage === '100%' ? 'yellow' : '',
-                'fontSize': tableFontSize
-            }}>{row[distance]}</TableCell>
-        })
-    }
-
-
-
-    const categoryData = fetchCategoryMetadata(distance, time)
-    const rows = categoryData ? generateDataTable(categoryData.category) : []
-    console.log(rows)
+    useEffect(() => {
+        setBestTimeByCategory(tableForget[distance].map(category => { return { category: category.category, bestTime: category.timeByPercentages['100%'] } }))
+        setRows(generateDataTable(category))
+    }, [distance, category])
 
     return (
         <div>
             <Grid container>
-
                 <Grid item xs={12}>
-
                     <Box sx={{ minWidth: 120 }} display="flex"
                         justifyContent="center"
                         alignItems="center"
@@ -85,20 +106,20 @@ const Form = () => {
                         </FormControl>
 
                         <FormControl sx={{ m: 1, minWidth: 200 }}>
-                            <InputLabel id="time-select-label">Time</InputLabel>
+                            <InputLabel id="time-select-label">Category / Best Time</InputLabel>
                             <Select
                                 labelId="time-select-label"
                                 id="time-select"
-                                value={time}
-                                label="Time"
-                                onChange={handleChangeTime}
+                                value={category}
+                                label="Category / Best Time"
+                                onChange={handleChangeCategory}
                             >
-                                {times.map(({ category, time }) => (
-                                    <MenuItem
-                                        key={time}
-                                        value={time}
+                                {bestTimesByCategory.map(({ category, bestTime }) => (
+                                    < MenuItem
+                                        key={category}
+                                        value={category}
                                     >
-                                        {category} - {time}
+                                        {category} - {bestTime}
                                     </MenuItem>
                                 ))}
                             </Select>
@@ -111,13 +132,13 @@ const Form = () => {
                         <Table aria-label="simple table" size="small">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell colSpan={100} align="center" sx={{ 'fontWeight': 'bold' }}>{categoryData?.category}</TableCell>
+                                    <TableCell colSpan={100} align="center" sx={{ 'fontWeight': 'bold' }}>{category}</TableCell>
                                 </TableRow>
                                 <TableRow >
                                     <TableCell>%</TableCell>
                                     {
-                                        distances.map((col => (
-                                            <TableCell align="right" sx={{ 'fontSize': '0.8rem' }}>{col}</TableCell>
+                                        distances.map((distance => (
+                                            <TableCell align="right" key={distance} sx={{ 'fontSize': '0.8rem' }}>{distance}</TableCell>
                                         )))
                                     }
                                 </TableRow>
@@ -127,11 +148,9 @@ const Form = () => {
                                     <TableRow
                                         hover
                                         key={row.percentage}
-                                        sx={{
-                                            '&:last-child td, &:last-child th': { border: 0 }
-                                        }}
+                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     >
-                                        <TableCell component="th" sx={{ color: row.percentage === '100%' ? 'yellow' : '', 'fontSize': tableFontSize }}>
+                                        <TableCell component="th" sx={{ color: row.percentage === '100%' ? '#FFBF00' : '', 'fontSize': tableFontSize }}>
                                             {row.percentage}
                                         </TableCell>
                                         {generateRows(row)}
